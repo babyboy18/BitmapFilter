@@ -67,8 +67,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp" >
+        android:paddingBottom="70dp" >
 
         <!-- 自定义的ImageView -->
 

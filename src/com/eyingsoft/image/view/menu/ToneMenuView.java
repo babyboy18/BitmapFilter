@@ -58,7 +58,7 @@ public class ToneMenuView
 		float density = metrics.density;
 		mPopup.setWidth(metrics.widthPixels);
 //		mPopup.setHeight((int) (105 * density));
-		mPopup.setHeight((int) (175 * density));
+		mPopup.setHeight((int) (170 * density));
 		mPopup.setContentView(view);
 		mPopup.setFocusable(true);
 		mPopup.setOutsideTouchable(true);
