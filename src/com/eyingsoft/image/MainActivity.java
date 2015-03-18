@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 	private final int FLAG_EDIT_REVERSE = FLAG_TONE + 8;
 
 	private View mSaveAll;//保存全部视图
-	private View mSaveStep;//记录各个步骤的视图
+	private View mSaveStepRl;//记录各个步骤的视图
 
 	private final int STATE_CROP = 0x1;
 	private final int STATE_NONE = STATE_CROP << 2;
@@ -149,7 +149,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 		setContentView(R.layout.image_main);
 		
 		mSaveAll = findViewById(R.id.save_all);
-		mSaveStep = findViewById(R.id.save_step);
+		mSaveStepRl = findViewById(R.id.save_step_rl);
 		mShowHandleName = (TextView) findViewById(R.id.handle_name);
 
 		Intent intent = getIntent();
@@ -471,12 +471,12 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
 	//步骤操作方法（保存与取消）
 	private void showSaveStep() {
-		mSaveStep.setVisibility(View.VISIBLE);
+		mSaveStepRl.setVisibility(View.VISIBLE);
 		mSaveAll.setVisibility(View.GONE);
 	}
 
 	private void showSaveAll() {
-		mSaveStep.setVisibility(View.GONE);
+		mSaveStepRl.setVisibility(View.GONE);
 		mSaveAll.setVisibility(View.VISIBLE);
 	}
 
