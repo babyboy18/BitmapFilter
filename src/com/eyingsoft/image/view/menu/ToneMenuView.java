@@ -57,7 +57,8 @@ public class ToneMenuView
 		
 		float density = metrics.density;
 		mPopup.setWidth(metrics.widthPixels);
-		mPopup.setHeight((int) (105 * density));
+//		mPopup.setHeight((int) (105 * density));
+		mPopup.setHeight((int) (175 * density));
 		mPopup.setContentView(view);
 		mPopup.setFocusable(true);
 		mPopup.setOutsideTouchable(true);
@@ -73,9 +74,17 @@ public class ToneMenuView
 		mToneView.setSaturationBarListener(l);
 	}
 	
-	public void setHueBarListener(OnSeekBarChangeListener l)
+	public void setHueBarRedListener(OnSeekBarChangeListener l)
 	{
-		mToneView.setHueBarListener(l);
+		mToneView.setHueBarRedListener(l);
+	}
+	public void setHueBarGreenListener(OnSeekBarChangeListener l)
+	{
+		mToneView.setHueBarGreenListener(l);
+	}
+	public void setHueBarBlueListener(OnSeekBarChangeListener l)
+	{
+		mToneView.setHueBarBlueListener(l);
 	}
 	
 	public void setLumBarListener(OnSeekBarChangeListener l)

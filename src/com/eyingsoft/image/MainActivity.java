@@ -235,7 +235,9 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 		mToneMenu.show();
 		mState = STATE_TONE;
 		mToneView = mToneMenu.getToneView();
-		mToneMenu.setHueBarListener(this);
+		mToneMenu.setHueBarRedListener(this);
+		mToneMenu.setHueBarGreenListener(this);
+		mToneMenu.setHueBarBlueListener(this);
 		mToneMenu.setLumBarListener(this);
 		mToneMenu.setSaturationBarListener(this);
 	}
@@ -619,17 +621,25 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 			boolean fromUser) {
 		int flag = -1;
 		switch ((Integer) seekBar.getTag()) {
-		case 1: // 饱和度
-			flag = 1;
+		case 0: // 饱和度
+			flag = 0;
 			mToneView.setSaturation(progress);
 			break;
-		case 2: // 色调
-			flag = 0;
-			mToneView.setHue(progress);
-			break;
-		case 3: // 亮度
-			flag = 2;
+		case 1: // 亮度
+			flag = 1;
 			mToneView.setLum(progress);
+			break;
+		case 2: // 红
+			flag = 2;
+			mToneView.setHue_Red(progress);
+			break;
+		case 3: // 绿
+			flag = 2;
+			mToneView.setHue_Green(progress);
+			break;
+		case 4: // 蓝
+			flag = 2;
+			mToneView.setHue_Blue(progress);
 			break;
 		}
 

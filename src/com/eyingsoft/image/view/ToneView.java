@@ -31,8 +31,12 @@ public class ToneView
 	/**
 	 * 色调
 	 */
-	private TextView mHue;
-	private SeekBar mHueBar;
+	private TextView mHue_Red;
+	private SeekBar mHueBar_Red;
+	private TextView mHue_Green;
+	private SeekBar mHueBar_Green;
+	private TextView mHue_Blue;
+	private SeekBar mHueBar_Blue;
 	
 	/**
 	 * 亮度
@@ -63,7 +67,9 @@ public class ToneView
 	/**
 	 * 色相
 	 */
-	private float mHueValue = 0F;
+	private float mHueValue_Red = 0F;
+	private float mHueValue_Green = 0F;
+	private float mHueValue_Blue = 0F;
 	private final int MIDDLE_VALUE = 127;
 	
 	/**
@@ -82,25 +88,46 @@ public class ToneView
 		
 		mSaturation = new TextView(context);
 		mSaturation.setText(R.string.saturation);
-		mHue = new TextView(context);
-		mHue.setText(R.string.contrast);
 		mLum = new TextView(context);
 		mLum.setText(R.string.lightness);
+//		mHue = new TextView(context);
+//		mHue.setText(R.string.contrast);
+		mHue_Red = new TextView(context);
+		mHue_Red.setText("红");
+		mHue_Green = new TextView(context);
+		mHue_Green.setText("绿");
+		mHue_Blue = new TextView(context);
+		mHue_Blue.setText("蓝");
 		
 		mSaturationBar = new SeekBar(context);
 		mSaturationBar.setMax(255);
 		mSaturationBar.setProgress(127);
-		mSaturationBar.setTag(1);
+		mSaturationBar.setTag(0);
 		
-		mHueBar = new SeekBar(context);
-		mHueBar.setMax(255);
-		mHueBar.setProgress(127);
-		mHueBar.setTag(2);
+//		mHueBar = new SeekBar(context);
+//		mHueBar.setMax(255);
+//		mHueBar.setProgress(127);
+//		mHueBar.setTag(2);
 		
 		mLumBar = new SeekBar(context);
 		mLumBar.setMax(255);
 		mLumBar.setProgress(127);
-		mLumBar.setTag(3);
+		mLumBar.setTag(1);
+		
+		mHueBar_Red = new SeekBar(context);
+		mHueBar_Red.setMax(255);
+		mHueBar_Red.setProgress(127);
+		mHueBar_Red.setTag(2);
+		
+		mHueBar_Green = new SeekBar(context);
+		mHueBar_Green.setMax(255);
+		mHueBar_Green.setProgress(127);
+		mHueBar_Green.setTag(3);
+		
+		mHueBar_Blue = new SeekBar(context);
+		mHueBar_Blue.setMax(255);
+		mHueBar_Blue.setProgress(127);
+		mHueBar_Blue.setTag(4);
 		
 		LinearLayout saturation = new LinearLayout(context);
 		saturation.setOrientation(LinearLayout.HORIZONTAL);
@@ -114,14 +141,14 @@ public class ToneView
 		saturation.addView(mSaturationBar, seekLayoutparams);
 		
 		
-		LinearLayout hue = new LinearLayout(context);
-		hue.setOrientation(LinearLayout.HORIZONTAL);
-		hue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-		
-		mHue.setGravity(Gravity.CENTER);
-		hue.addView(mHue, txtLayoutparams);
-		
-		hue.addView(mHueBar, seekLayoutparams);
+//		LinearLayout hue = new LinearLayout(context);
+//		hue.setOrientation(LinearLayout.HORIZONTAL);
+//		hue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+//		
+//		mHue.setGravity(Gravity.CENTER);
+//		hue.addView(mHue, txtLayoutparams);
+//		
+//		hue.addView(mHueBar, seekLayoutparams);
 		
 		
 		LinearLayout lum = new LinearLayout(context);
@@ -132,12 +159,40 @@ public class ToneView
 		lum.addView(mLum, txtLayoutparams);
 		lum.addView(mLumBar, seekLayoutparams);
 		
+		LinearLayout hue_red = new LinearLayout(context);
+		hue_red.setOrientation(LinearLayout.HORIZONTAL);
+		hue_red.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		
+		mHue_Red.setGravity(Gravity.CENTER);
+		hue_red.addView(mHue_Red, txtLayoutparams);
+		hue_red.addView(mHueBar_Red, seekLayoutparams);
+		
+		
+		LinearLayout hue_green = new LinearLayout(context);
+		hue_green.setOrientation(LinearLayout.HORIZONTAL);
+		hue_green.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		
+		mHue_Green.setGravity(Gravity.CENTER);
+		hue_green.addView(mHue_Green, txtLayoutparams);
+		hue_green.addView(mHueBar_Green, seekLayoutparams);
+		
+		
+		LinearLayout hue_blue = new LinearLayout(context);
+		hue_blue.setOrientation(LinearLayout.HORIZONTAL);
+		hue_blue.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		
+		mHue_Blue.setGravity(Gravity.CENTER);
+		hue_blue.addView(mHue_Blue, txtLayoutparams);
+		hue_blue.addView(mHueBar_Blue, seekLayoutparams);
+		
 		mParent = new LinearLayout(context);
 		mParent.setOrientation(LinearLayout.VERTICAL);
 		mParent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		mParent.addView(saturation);
-		mParent.addView(hue);
 		mParent.addView(lum);
+		mParent.addView(hue_red);
+		mParent.addView(hue_green);
+		mParent.addView(hue_blue);
 	}
 	
 	public View getParentView()
@@ -150,9 +205,17 @@ public class ToneView
 		mSaturationBar.setOnSeekBarChangeListener(l);
 	}
 	
-	public void setHueBarListener(OnSeekBarChangeListener l)
+	public void setHueBarRedListener(OnSeekBarChangeListener l)
 	{
-		mHueBar.setOnSeekBarChangeListener(l);
+		mHueBar_Red.setOnSeekBarChangeListener(l);
+	}
+	public void setHueBarGreenListener(OnSeekBarChangeListener l)
+	{
+		mHueBar_Green.setOnSeekBarChangeListener(l);
+	}
+	public void setHueBarBlueListener(OnSeekBarChangeListener l)
+	{
+		mHueBar_Blue.setOnSeekBarChangeListener(l);
 	}
 	
 	public void setLumBarListener(OnSeekBarChangeListener l)
@@ -165,9 +228,17 @@ public class ToneView
 		mSaturationValue = (float) (saturation * 1.0D / MIDDLE_VALUE);
 	}
 	
-	public void setHue(int hue)
+	public void setHue_Red(int hue)
 	{
-		mHueValue = (float) (hue * 1.0D / MIDDLE_VALUE);
+		mHueValue_Red = (float) (hue * 1.0D / MIDDLE_VALUE);
+	}
+	public void setHue_Green(int hue)
+	{
+		mHueValue_Green = (float) (hue * 1.0D / MIDDLE_VALUE);
+	}
+	public void setHue_Blue(int hue)
+	{
+		mHueValue_Blue = (float) (hue * 1.0D / MIDDLE_VALUE);
 	}
 	
 	public void setLum(int lum)
@@ -218,22 +289,22 @@ public class ToneView
 
 		switch (flag)
 		{
-		case 0: // 需要改变色相
+		case 2: // 需要改变色相
 			// f 表示亮度比例，取值小于1，表示亮度减弱，否则亮度增强
 			mHueMatrix.reset();
-			mHueMatrix.setScale(mHueValue, mHueValue, mHueValue, 1); // 红、绿、蓝三分量按相同的比例,最后一个参数1表示透明度不做变化，此函数详细说明参考
+			mHueMatrix.setScale(mHueValue_Red, mHueValue_Green, mHueValue_Blue, 1); // 红、绿、蓝三分量按相同的比例,最后一个参数1表示透明度不做变化，此函数详细说明参考
 			// // android
 			// doc
 			Log.d("may", "改变色相");
 			break;
-		case 1: // 需要改变饱和度
+		case 0: // 需要改变饱和度
 			// saturation 饱和度值，最小可设为0，此时对应的是灰度图(也就是俗话的“黑白图”)，
 			// 为1表示饱和度不变，设置大于1，就显示过饱和
 			mSaturationMatrix.reset();
 			mSaturationMatrix.setSaturation(mSaturationValue);
 			Log.d("may", "改变饱和度");
 			break;
-		case 2: // 亮度
+		case 1: // 亮度
 			// hueColor就是色轮旋转的角度,正值表示顺时针旋转，负值表示逆时针旋转
 			mLightnessMatrix.reset(); // 设为默认值
 			mLightnessMatrix.setRotate(0, mLightnessValue); // 控制让红色区在色轮上旋转hueColor葛角度
