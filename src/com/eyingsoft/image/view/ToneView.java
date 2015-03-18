@@ -51,7 +51,9 @@ public class ToneView
 	
 	private ColorMatrix mLightnessMatrix;
 	private ColorMatrix mSaturationMatrix;
-	private ColorMatrix mHueMatrix;
+	private ColorMatrix mHueRedMatrix;
+	private ColorMatrix mHueGreenMatrix;
+	private ColorMatrix mHueBlueMatrix;
 	private ColorMatrix mAllMatrix;
 	
 	/**
@@ -230,20 +232,24 @@ public class ToneView
 	
 	public void setHue_Red(int hue)
 	{
-		mHueValue_Red = (float) (hue * 1.0D / MIDDLE_VALUE);
+//		mHueValue_Red = (float) (hue * 1.0D / MIDDLE_VALUE);
+		mHueValue_Red = (float) ((hue - MIDDLE_VALUE) * 1.0D / MIDDLE_VALUE * 180);
 	}
 	public void setHue_Green(int hue)
 	{
-		mHueValue_Green = (float) (hue * 1.0D / MIDDLE_VALUE);
+//		mHueValue_Green = (float) (hue * 1.0D / MIDDLE_VALUE);
+		mHueValue_Green = (float) ((hue - MIDDLE_VALUE) * 1.0D / MIDDLE_VALUE * 180);
 	}
 	public void setHue_Blue(int hue)
 	{
-		mHueValue_Blue = (float) (hue * 1.0D / MIDDLE_VALUE);
+//		mHueValue_Blue = (float) (hue * 1.0D / MIDDLE_VALUE);
+		mHueValue_Blue = (float) ((hue - MIDDLE_VALUE) * 1.0D / MIDDLE_VALUE * 180);
 	}
 	
 	public void setLum(int lum)
 	{
-		mLightnessValue = (float) ((lum - MIDDLE_VALUE) * 1.0D / MIDDLE_VALUE * 180);
+//		mLightnessValue = (float) ((lum - MIDDLE_VALUE) * 1.0D / MIDDLE_VALUE * 180);
+		mLightnessValue = (float) (lum * 1.0D / MIDDLE_VALUE);
 	}
 	
 	/**
@@ -282,17 +288,25 @@ public class ToneView
 			mSaturationMatrix = new ColorMatrix();
 		}
 		
-		if (null == mHueMatrix)
+		if (null == mHueRedMatrix)
 		{
-			mHueMatrix = new ColorMatrix();
+			mHueRedMatrix = new ColorMatrix();
+		}
+		if (null == mHueGreenMatrix)
+		{
+			mHueGreenMatrix = new ColorMatrix();
+		}
+		if (null == mHueBlueMatrix)
+		{
+			mHueBlueMatrix = new ColorMatrix();
 		}
 
 		switch (flag)
 		{
-		case 2: // 需要改变色相
+		case 1: // 亮度
 			// f 表示亮度比例，取值小于1，表示亮度减弱，否则亮度增强
-			mHueMatrix.reset();
-			mHueMatrix.setScale(mHueValue_Red, mHueValue_Green, mHueValue_Blue, 1); // 红、绿、蓝三分量按相同的比例,最后一个参数1表示透明度不做变化，此函数详细说明参考
+			mLightnessMatrix.reset();
+			mLightnessMatrix.setScale(mLightnessValue, mLightnessValue, mLightnessValue, 1); // 红、绿、蓝三分量按相同的比例,最后一个参数1表示透明度不做变化，此函数详细说明参考
 			// // android
 			// doc
 			Log.d("may", "改变色相");
@@ -304,20 +318,24 @@ public class ToneView
 			mSaturationMatrix.setSaturation(mSaturationValue);
 			Log.d("may", "改变饱和度");
 			break;
-		case 1: // 亮度
+		case 2: // 色彩
 			// hueColor就是色轮旋转的角度,正值表示顺时针旋转，负值表示逆时针旋转
-			mLightnessMatrix.reset(); // 设为默认值
-			mLightnessMatrix.setRotate(0, mLightnessValue); // 控制让红色区在色轮上旋转hueColor葛角度
-			mLightnessMatrix.setRotate(1, mLightnessValue); // 控制让绿红色区在色轮上旋转hueColor葛角度
-			mLightnessMatrix.setRotate(2, mLightnessValue); // 控制让蓝色区在色轮上旋转hueColor葛角度
+			mHueRedMatrix.reset(); // 设为默认值
+			mHueGreenMatrix.reset(); // 设为默认值
+			mHueBlueMatrix.reset(); // 设为默认值
+			mHueRedMatrix.setRotate(0, mHueValue_Red); // 控制让红色区在色轮上旋转hueColor葛角度
+			mHueGreenMatrix.setRotate(1, mHueValue_Green); // 控制让绿红色区在色轮上旋转hueColor葛角度
+			mHueBlueMatrix.setRotate(2, mHueValue_Blue); // 控制让蓝色区在色轮上旋转hueColor葛角度
 			// 这里相当于改变的是全图的色相
 			Log.d("may", "改变亮度");
 			break;
 		}
 		mAllMatrix.reset();
-		mAllMatrix.postConcat(mHueMatrix);
+		mAllMatrix.postConcat(mLightnessMatrix);
 		mAllMatrix.postConcat(mSaturationMatrix); // 效果叠加
-		mAllMatrix.postConcat(mLightnessMatrix); // 效果叠加
+		mAllMatrix.postConcat(mHueRedMatrix); // 效果叠加
+		mAllMatrix.postConcat(mHueGreenMatrix); // 效果叠加
+		mAllMatrix.postConcat(mHueBlueMatrix); // 效果叠加
 
 		paint.setColorFilter(new ColorMatrixColorFilter(mAllMatrix));// 设置颜色变换效果
 		canvas.drawBitmap(bm, 0, 0, paint); // 将颜色变化后的图片输出到新创建的位图区
